@@ -15,11 +15,13 @@ Este sistema permite que o proprio cliente digite o valor a ser enviado para voc
 
 # Como usar
 
+Neste exemplo vamos usar a URL teste: https://brcxp.com.br/checkout-cobrefacil-brc/v1/, no seu caso, você vai trocar pela sua. Caso queira testar o checkout, acesse esta URL.
+
 Caso queira que o cliente digite o valor, não precisa adicionar nenhum parametro na URL.
 
 Caso queira, você tambem pode enviar o link já com o valor, como abaixo:
 
-<code>https://seusite.com.br/?ref={ID_REF}&v={VALOR}&desc={DESCRICAO}</code>
+<code>https://brcxp.com.br/checkout-cobrefacil-brc/v1/?ref={ID_REF}&v={VALOR}&desc={DESCRICAO}</code>
 
 <code>{ID_REF}:</code> Pode ser uma referencia interna sua.
 
@@ -28,7 +30,7 @@ Caso queira, você tambem pode enviar o link já com o valor, como abaixo:
 <code>{DESCRICAO}:</code> Nome do produto, serviço ou plano que esta oferecendo ao cliente.
 
 Exemplo:
-https://seusite.com.br/?ref=PR100&v=15000&desc=Produto+teste
+https://brcxp.com.br/checkout-cobrefacil-brc/v1/?ref=PR100&v=15000&desc=Produto+teste
 
 
 
@@ -36,10 +38,10 @@ https://seusite.com.br/?ref=PR100&v=15000&desc=Produto+teste
 
 Caso queira usar para assinaturas de planos ou serviços previamente cadastrados na plataforma cobrefacil, segue abaixo:
 
-<code>https://seusite.com.br/?ref=planoid&desc={ID_CSV}</code>
+<code>https://brcxp.com.br/checkout-cobrefacil-brc/v1/?ref=planoid&desc={ID_CSV}</code>
 
 Exemplo:
-https://seusite.com.br/?ref=planoid&desc=2
+https://brcxp.com.br/checkout-cobrefacil-brc/v1/?ref=planoid&desc=2
 
 
 <b>OBS:</b> Para usar o sistema de mensalidade, você precisa criar um arquivo chamado "mensalidades.csv" dentro da pasta "app". Você pode baixar o exemplo dentro deste repositório: https://github.com/brunoalbim/checkout-cobrefacil-brc-app-config/blob/main/mensalidades.csv
