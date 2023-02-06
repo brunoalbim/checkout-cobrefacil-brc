@@ -7,8 +7,8 @@ Este sistema permite que o proprio cliente digite o valor a ser enviado para voc
 
 # Como configurar
 
-1. Baixe todos o código deste repositório.
-2. Dentro da pasta "app" adicione este arquivo base de configuração: https://github.com/brunoalbim/checkout-cobrefacil-brc-app-config
+1. Baixe todos os arquivos e pastas deste repositório.
+2. Dentro da pasta "app" adicione este arquivo base de configuração: https://github.com/brunoalbim/checkout-cobrefacil-brc-app-config/blob/main/%40config.php
 3. Configure o arquivo "@config.php" como instruções dentro dele.
 
 
@@ -22,8 +22,10 @@ Caso queira, você tambem pode enviar o link já com o valor, como abaixo:
 <code>https://seusite.com.br/?ref={ID_REF}&v={VALOR}&desc={DESCRICAO}</code>
 
 <code>{ID_REF}:</code> Pode ser uma referencia interna sua.
+
 <code>{VALOR}:</code> O valor que deseja receber do cliente. Sendo que o valor deve ter os centavos "sem a virgula". Ex: Para pedir R$150,34 preencha com o valor 15034.
-<code>{DESCRICAO}:</code>
+
+<code>{DESCRICAO}:</code> Nome do produto, serviço ou plano que esta oferecendo ao cliente.
 
 Exemplo:
 https://seusite.com.br/?ref=PR100&v=15000&desc=Produto+teste
@@ -40,4 +42,4 @@ Exemplo:
 https://seusite.com.br/?ref=planoid&desc=2
 
 
-<b>OBS:</b> Para usar o sistema de mensalidade, você precisa criar um arquivo chamado "mensalidades.csv" dentro da pasta "app". Você pode baixar o exemplo dentro deste repositório: https://github.com/brunoalbim/checkout-cobrefacil-brc-app-config
+<b>OBS:</b> Para usar o sistema de mensalidade, você precisa criar um arquivo chamado "mensalidades.csv" dentro da pasta "app". Você pode baixar o exemplo dentro deste repositório: https://github.com/brunoalbim/checkout-cobrefacil-brc-app-config/blob/main/mensalidades.csv
