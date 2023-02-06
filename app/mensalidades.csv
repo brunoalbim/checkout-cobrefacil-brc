@@ -1,0 +1,2 @@
+id,plano_id,intervalo_cobranca,meios_de_pagamento
+1,MODELO,1,"bankslip,credit,pix"

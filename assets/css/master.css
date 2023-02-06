@@ -1,0 +1,166 @@
+:root {
+  --cor-principal: #07b89d;
+  --cor-principal-hover: #0bc39d;
+}
+* {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+body {
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    background: #ffffff;
+    color: #919191;
+}
+
+input.uk-input.money {
+    font-size: 50px;
+    padding: 50px 20px;
+    color: #000;
+    text-align: center;
+    font-weight: 700;
+}
+
+label {
+    color: #000;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+label small {
+    color: #979797;
+    font-weight: 400;
+}
+
+.body-load > *:not(.loadspinner) {
+  opacity: 0.5;
+}
+
+.container-principal {
+  width: 400px;
+}
+
+.display-none {
+  display: none !important;
+}
+
+.uk-button-primary {
+  background: var(--cor-principal);
+  font-weight: 700;
+  border-radius: 5px;
+}
+
+.uk-button-primary:focus,
+.uk-button-primary:hover {
+  background: var(--cor-principal-hover);
+}
+
+.uk-notification-message {
+    border-radius: 5px;
+    border: none;
+    background: rgb(233 240 249);
+    color: #0001ff;
+}
+
+.loadspinner {
+  position: fixed;
+  top: calc(50% - 65px);
+  right: calc(50% - 65px);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 12px 20px 0px rgb(0 0 0 / 22%);
+  z-index: 9;
+  border: none;
+  background: rgb(255 255 255);
+  color: #0001ff;
+  fill: #0001ff;
+}
+
+h1, h1 * {
+    color: #000;
+    font-size: 30px;
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+.uk-input, .uk-select, .uk-textarea {
+    border-radius: 5px;
+    border: 1px solid #d7d7d7;
+    font-size: 16px;
+    height: 50px !important;
+    font-weight: 400;
+    margin-top: 4px;
+}
+
+.uk-input:focus, .uk-select:focus, .uk-textarea:focus {
+    color: #000;
+}
+
+.uk-button-primary {
+    padding: 8px 10px;
+    border-radius: 100px;
+    box-shadow: 0px 11px 13px 6px rgb(7 184 157 / 18%);
+}
+
+
+
+.checkmark__circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 2;
+    stroke-miterlimit: 10;
+    stroke: #07b89d;
+    fill: none;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards
+}
+.checkmark {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 2;
+    stroke: #fff;
+    stroke-miterlimit: 10;
+    margin: 0 auto 40px;
+    box-shadow: inset 0px 0px 0px #07b89d;
+    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both
+}
+.checkmark__check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards
+}
+@keyframes stroke {
+    100%{
+        stroke-dashoffset: 0
+    }
+}
+@keyframes scale {
+    0%, 100%{
+        transform: none
+    }
+    50%{
+        transform: scale3d(1.1, 1.1, 1)
+    }
+}
+@keyframes fill {
+    100%{
+        box-shadow: inset 0px 0px 0px 30px #07b89d
+    }
+}
+
+.uk-input.desativado {
+    background: #e3e3e3;
+    color: #979797;
+}
+
+.uk-form-danger,.uk-form-danger:focus {
+    color: #f0506e;
+    border-color: #f0506e;
+}
+
+.uk-form-success,.uk-form-success:focus {
+    color: #32d296;
+    border-color: #32d296;
+}
