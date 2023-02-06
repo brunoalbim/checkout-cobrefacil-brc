@@ -26,7 +26,7 @@ Caso queira, você tambem pode enviar o link já com o valor, como abaixo:
 <code>{DESCRICAO}:</code>
 
 Exemplo:
-<code>https://seusite.com.br/?ref=PR100&v=15000&desc=Produto+teste</code>
+https://seusite.com.br/?ref=PR100&v=15000&desc=Produto+teste
 
 
 
@@ -34,6 +34,10 @@ Exemplo:
 
 Caso queira usar para assinaturas de planos ou serviços previamente cadastrados na plataforma cobrefacil, segue abaixo:
 
-<code>https://seusite.com.br/?ref={ID_REF}&desc={DESCRICAO}</code>
+<code>https://seusite.com.br/?ref=planoid&desc={ID_CSV}</code>
+
+Exemplo:
+https://seusite.com.br/?ref=planoid&desc=2
+
 
 <b>OBS:</b> Para usar o sistema de mensalidade, você precisa criar um arquivo chamado "mensalidades.csv" dentro da pasta "app". Você pode baixar o exemplo dentro deste repositório: https://github.com/brunoalbim/checkout-cobrefacil-brc-app-config
