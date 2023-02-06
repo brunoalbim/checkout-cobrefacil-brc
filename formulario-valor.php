@@ -58,7 +58,9 @@ $_SESSION['v'] = $infoPlanoId['data']['price'];
         <select class="uk-select" name="opcao_de_pagamento">
           <option value="gerar_boleto">Pagar no Boleto</option>
           <option value="gerar_pix">Pagar no PIX</option>
-          <!--<option value="gerar_cartao">Pagar no Cartão 1x <?= $jurosCartao && $jurosCartao > 0 ? '(+'.$jurosCartao.'% juros)':'' ?></option>-->
+          <?php if($habilitarCartao === true) { ?>
+            <option value="gerar_cartao">Pagar no Cartão 1x <?= $jurosCartao && $jurosCartao > 0 ? '(+'.$jurosCartao.'% juros)':'' ?></option>
+          <?php } ?>
         </select>
       </label>
     </p>
