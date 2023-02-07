@@ -2,6 +2,8 @@
   session_start();
   require_once('app/@config.php');
   require_once('modulos/cobrefacil.php');
+  $cobrefacil = new Cobrefacil;
+  $cobrefacil_authenticate = json_decode($cobrefacil->authenticate($buscar_credenciais_cf), true);
 
   $valor = $_GET['valor'];
   $opcao_de_pagamento = $_GET['opcao_de_pagamento'];
@@ -15,67 +17,31 @@
     $valor = number_format((($valor * $jurosCartao) / 100) + $valor, 2, '', '');
   }
 
+  $informacoes_post = [
+     "ref" => $_GET['referencia'] ?: "",
+     "id_cliente_cf" => $_GET['id_cliente_cf'] ?: "",
+     "descricao" => $_GET['descricao'] ?: "",
+     "valor" => str_replace([',','.'], '', $valor),
+   ];
 
-  if (str_replace([',','.'], '', $valor) === str_replace([',','.'], '', $_SESSION['valor'])) {
-    $fonte = "SESSION";
+   if ($opcao_de_pagamento === 'gerar_mensalidade') {
+     $informacoes_post['plano_ou_servico'] = $plano_ou_servico;
+     $informacoes_post['plano_id'] = $_SESSION['mensalidadecsv']['plano_id'];
+     $informacoes_post['intervalo_cobranca'] = $_SESSION['mensalidadecsv']['intervalo_cobranca'];
+     $informacoes_post['meios_de_pagamento'] = $_SESSION['mensalidadecsv']['meios_de_pagamento'];
+   }
+
+  $function_pagamento = $cobrefacil->$opcao_de_pagamento($informacoes_post, $cobrefacil_authenticate, $buscar_credenciais_cf);
+
+  $cobrefacil_resultado = json_decode($function_pagamento, true);
+
+  if ($opcao_de_pagamento === 'gerar_mensalidade') {
+    $gerar_cobranca_mensalidade = json_decode($cobrefacil->gerar_cobranca_mensalidade($cobrefacil_resultado['data']['id'], $cobrefacil_authenticate, $buscar_credenciais_cf), true);
+    $id_fatura = $gerar_cobranca_mensalidade['data']['id'];
   } else {
-    $fonte = "API";
-    $cobrefacil = new Cobrefacil;
-    $cobrefacil_authenticate = json_decode($cobrefacil->authenticate($buscar_credenciais_cf), true);
-
-    $informacoes_post = [
-       "ref" => $_GET['referencia'] ?: "",
-       "id_cliente_cf" => $_GET['id_cliente_cf'] ?: "",
-       "descricao" => $_GET['descricao'] ?: "",
-       "valor" => str_replace([',','.'], '', $valor),
-     ];
-
-     if ($opcao_de_pagamento === 'gerar_mensalidade') {
-       $informacoes_post['plano_ou_servico'] = $plano_ou_servico;
-       $informacoes_post['plano_id'] = $_SESSION['mensalidadecsv']['plano_id'];
-       $informacoes_post['intervalo_cobranca'] = $_SESSION['mensalidadecsv']['intervalo_cobranca'];
-       $informacoes_post['meios_de_pagamento'] = $_SESSION['mensalidadecsv']['meios_de_pagamento'];
-     }
-
-    $function_pagamento = $cobrefacil->$opcao_de_pagamento($informacoes_post, $cobrefacil_authenticate, $buscar_credenciais_cf);
-
-    $cobrefacil_resultado = json_decode($function_pagamento, true);
-
-    if ($opcao_de_pagamento === 'gerar_mensalidade') {
-      $gerar_cobranca_mensalidade = json_decode($cobrefacil->gerar_cobranca_mensalidade($cobrefacil_resultado['data']['id'], $cobrefacil_authenticate, $buscar_credenciais_cf), true);
-
-      $_SESSION['valor'] = $gerar_cobranca_mensalidade['data']['price'];
-      $_SESSION['url'] = $gerar_cobranca_mensalidade['data']['url_invoice'];
-      $_SESSION['id'] = $gerar_cobranca_mensalidade['data']['id'];
-      $_SESSION['due_date'] = date("d/m/Y", strtotime($gerar_cobranca_mensalidade['data']['due_date']));
-    } else {
-      $_SESSION['valor'] = $cobrefacil_resultado['data']['price'];
-      $_SESSION['url'] = $cobrefacil_resultado['data']['url'];
-      $_SESSION['id'] = $cobrefacil_resultado['data']['id'];
-      $_SESSION['due_date'] = date("d/m/Y", strtotime($cobrefacil_resultado['data']['due_date']));
-    }
-
+    $id_fatura = $cobrefacil_resultado['data']['id'];
   }
 
-  require_once('header.php');
-?>
+  session_destroy();
 
-<div class="uk-container uk-container-xsmall">
-  <center>
-    <div class="wrapper-check">
-      <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"> <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/> <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
-    </div>
-    <h1> <strong>Fatura gerada!</strong> </h1>
-    <p> Sua fatura no valor de R$<?= $_SESSION['valor'] ?>, foi gerado e esta disponivel para pagamento. <br> Você tambem irá receber um e-mail nosso. </p>
-    <?php if($opcao_de_pagamento === "gerar_boleto") { ?>
-      <p> <a style="width: 100%" class="uk-button uk-button-primary" target="_blank" href="<?= $_SESSION['url'] ?>/boleto-impressao"> Abrir boleto </a> </p>
-    <?php } else { ?>
-      <p> <a style="width: 100%" class="uk-button uk-button-primary" target="_blank" href="<?= $_SESSION['url'] ?>"> Pagar agora! </a> </p>
-    <?php } ?>
-
-    <p>Cobrança ID: <?= $_SESSION['id'] ?></p>
-    <p class="uk-text-muted uk-margin-top"> <small>GET: <?= $fonte ?></small> </p>
-  </center>
-</div>
-
-<?php require_once('footer.php'); ?>
+  header("Location: ".base_url().'sucesso/?id_fatura='.$id_fatura.'&op='.$opcao_de_pagamento);

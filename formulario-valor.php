@@ -29,7 +29,9 @@ if($_SESSION['ref'] === "planoid") {
 }
 
 $_SESSION['mensalidadecsv'] = $plano[0];
-$_SESSION['v'] = $infoPlanoId['data']['price'];
+if ($infoPlanoId['data']['price']) {
+  $_SESSION['v'] = $infoPlanoId['data']['price'];
+}
 
 ?>
 
